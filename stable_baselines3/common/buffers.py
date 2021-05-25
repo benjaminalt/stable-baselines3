@@ -423,7 +423,7 @@ class RolloutBuffer(BaseBuffer):
             self.full = True
 
     def get(self, batch_size: Optional[int] = None) -> Generator[RolloutBufferSamples, None, None]:
-        assert self.full, ""
+        # assert self.full, ""  # Don't assert; allow getting anytime, even before full
         indices = np.random.permutation(self.buffer_size * self.n_envs)
         # Prepare the data
         if not self.generator_ready:
