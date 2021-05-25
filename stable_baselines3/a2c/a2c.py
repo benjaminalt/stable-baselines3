@@ -115,7 +115,7 @@ class A2C(OnPolicyAlgorithm):
         if _init_setup_model:
             self._setup_model()
 
-    def train(self) -> None:
+    def train(self):
         """
         Update policy using the currently gathered
         rollout buffer (one gradient step over whole data).
@@ -173,6 +173,8 @@ class A2C(OnPolicyAlgorithm):
         logger.record("train/value_loss", value_loss.item())
         if hasattr(self.policy, "log_std"):
             logger.record("train/std", th.exp(self.policy.log_std).mean().item())
+
+        return entropy_loss.item(), policy_loss.item(), value_loss.item()
 
     def learn(
         self,
